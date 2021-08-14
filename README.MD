@@ -4,11 +4,11 @@
 
 Segue abaixo as principais tecnologias utilizadas neste projeto:
 
-JavaScript ✅
-Typescript ✅
-TypeORM ✅
-Redis ✅
-Postgresql ✅
+- JavaScript ✅
+- Typescript ✅
+- TypeORM ✅
+- Redis ✅
+- Postgresql ✅
 
 Instalação de dependências e bibliotecas
 
