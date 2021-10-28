@@ -17,7 +17,7 @@ export default class MessagesRepository {
     });
   }
 
-  async getMessage(id: number): Promise<Messsage | undefined> {
+  async getMessage(id: number | string): Promise<Messsage | undefined> {
     const messages = await MessagesEntity.findOne(id, {
       relations: ['user'],
     });
@@ -40,7 +40,7 @@ export default class MessagesRepository {
     }
   }
 
-  async getMessageUser(id: number): Promise<Messsage[] | undefined> {
+  async getMessageUser(id: number | string): Promise<Messsage[] | undefined> {
     const messages = await MessagesEntity.find({
       where: { idUser: id },
     });
@@ -75,7 +75,7 @@ export default class MessagesRepository {
     return Object.assign({}, params, project);
   }
 
-  async update(id: number, params: Messsage) {
+  async update(id: number | string, params: Messsage) {
     const { description, details } = params;
 
     const result = await MessagesEntity.update(id, {
@@ -86,7 +86,7 @@ export default class MessagesRepository {
     return Object.assign({}, params, result);
   }
 
-  async delete(id: number) {
+  async delete(id: number | string) {
     return await MessagesEntity.delete(id);
   }
 }

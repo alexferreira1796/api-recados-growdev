@@ -1,4 +1,4 @@
-import { CacheRepository } from '../../../../core/infra/repositories/cache.repository';
+import { CacheRepository } from "../../../../core/infra/repositories/cache.repository";
 import {
   DataNotFoundError,
   HttpRequest,
@@ -7,8 +7,8 @@ import {
   notFound,
   ok,
   serverError,
-} from '../../../../core/presentation';
-import MessagesRepository from '../../infra/repositories/messages.repository';
+} from "../../../../core/presentation";
+import MessagesRepository from "../../infra/repositories/messages.repository";
 
 export class MessageController implements MvcController {
   readonly #repository: MessagesRepository;
@@ -22,20 +22,20 @@ export class MessageController implements MvcController {
   public async index() {
     try {
       // verifico se existe no cache
-      const cache = await this.#cache.get('messages:all');
+      const cache = await this.#cache.get("messages:all");
       // valido se existe cache
       if (cache) {
         return ok(
           cache.map((message: any) =>
             Object.assign({}, message, {
               cache: true,
-            }),
-          ),
+            })
+          )
         );
       }
 
       const messages = await this.#repository.getMessages();
-      await this.#cache.set('messages:all', messages);
+      await this.#cache.set("messages:all", messages);
 
       return ok(messages);
     } catch (error) {
@@ -48,7 +48,7 @@ export class MessageController implements MvcController {
 
     try {
       const result = await this.#repository.delete(id);
-      this.#cache.del('messages:all');
+      this.#cache.del("messages:all");
       return ok(result);
     } catch (error) {
       return serverError();
@@ -60,7 +60,7 @@ export class MessageController implements MvcController {
     try {
       const result = await this.#repository.create(id, request.body);
 
-      this.#cache.del('messages:all');
+      this.#cache.del("messages:all");
 
       return ok(result);
     } catch (error) {
@@ -116,7 +116,7 @@ export class MessageController implements MvcController {
   }
 
   getName(request: HttpRequest): Promise<HttpResponse> {
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
   async update(request: HttpRequest): Promise<HttpResponse> {
@@ -125,7 +125,7 @@ export class MessageController implements MvcController {
     try {
       const result = await this.#repository.update(id, request.body);
 
-      this.#cache.del('messages:all');
+      this.#cache.del("messages:all");
 
       return ok(result);
     } catch (error) {

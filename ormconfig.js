@@ -1,10 +1,19 @@
 require('dotenv').config();
 
-const rootPath = process.env.NODE_ENV?.toLocaleLowerCase() === "production" ? 'dist' : 'src'
+const rootPath =
+  process.env.NODE_ENV?.toLocaleLowerCase() === 'production' ? 'dist' : 'src';
 
-module.exports = {
-    type: 'postgres',
-    //url: process.env.DATABASE_URL,
+let config = {};
+
+if (process.env.NODE_ENV.toString() === 'test') {
+  config = {
+    type: 'sqlite',
+    database: './testdb.db',
+    entities: [`${rootPath}/core/infra/data/database/entities/**/*`],
+    migrations: [`${rootPath}/core/infra/data/database/migrations/**/*`],
+  };
+} else {
+  config = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     username: process.env.DB_USERNAME,
@@ -13,18 +22,17 @@ module.exports = {
     synchronize: false,
     logging: false,
     extra: {
-        ssl: {
-        rejectUnauthorized: false
-        }
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
-    entities: [
-        `${rootPath}/core/infra/data/database/entities/**/*`
-    ],
-    migrations: [
-        `${rootPath}/core/infra/data/database/migrations/**/*`
-    ],
+    entities: [`${rootPath}/core/infra/data/database/entities/**/*`],
+    migrations: [`${rootPath}/core/infra/data/database/migrations/**/*`],
     cli: {
-        entitiesDir: `${rootPath}/core/infra/data/database/entities`,
-        migrationsDir: `${rootPath}/core/infra/data/database/migrations`
-    }
+      entitiesDir: `${rootPath}/core/infra/data/database/entities`,
+      migrationsDir: `${rootPath}/core/infra/data/database/migrations`,
+    },
+  };
 }
+
+module.exports = config;

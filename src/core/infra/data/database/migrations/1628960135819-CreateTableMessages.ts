@@ -15,7 +15,7 @@ export class CreateTableMessages1628960135819 implements MigrationInterface {
             name: 'id',
             type: 'serial',
             isPrimary: true,
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'description',
@@ -36,13 +36,13 @@ export class CreateTableMessages1628960135819 implements MigrationInterface {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
-            isNullable: false,
+            isNullable: true,
           },
         ],
         foreignKeys: [
