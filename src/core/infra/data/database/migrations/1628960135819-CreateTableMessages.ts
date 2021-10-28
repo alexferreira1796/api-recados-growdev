@@ -30,7 +30,7 @@ export class CreateTableMessages1628960135819 implements MigrationInterface {
           {
             name: 'id_user',
             type: 'int',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'created_at',

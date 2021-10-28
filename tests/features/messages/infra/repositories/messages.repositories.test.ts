@@ -2,9 +2,14 @@ import MessagesRepository from '../../../../../src/features/messages/infra/repos
 import Database from '../../../../../src/core/infra/data/connections/database';
 import { MessagesEntity } from '../../../../../src/core/infra/data/database/entities';
 import { Messsage } from '../../../../../src/features/messages/domain/models';
-import { makeReturnId } from '../../../user/infra/repositories/user.repository.test';
+import {
+  makeReturnId,
+  makeCreateUser,
+} from '../../../user/infra/repositories/user.repository.test';
+import UserRepository from '../../../../../src/features/user/infra/repositories/user.repository';
 
 const id = makeReturnId();
+const { name } = makeCreateUser();
 
 const makeCreateMessage = (): Messsage => {
   return {
@@ -24,17 +29,17 @@ describe('Messages Repository', () => {
     await MessagesEntity.clear();
   });
 
-  afterAll(async () => {
-    await new Database().disconnectDatabase();
-  });
-
   describe('Create Message', () => {
     it('Should create a message', async () => {
       const sut = new MessagesRepository();
       const params = makeCreateMessage();
 
-      const result = await sut.create(params.idUser, params);
-      expect(result!).toBeTruthy();
+      let result;
+      const user = await new UserRepository().getUserName(name);
+      if (user !== undefined) {
+        result = await sut.create(String(user.id), params);
+        expect(result).toBeTruthy();
+      }
     });
   });
 

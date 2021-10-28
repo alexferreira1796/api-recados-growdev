@@ -11,7 +11,7 @@ export const makeReturnId = () => {
   };
 };
 
-const makeCreateUser = (): UserModel => {
+export const makeCreateUser = (): UserModel => {
   return {
     name: 'Name Teste',
     password: '123e',
@@ -28,12 +28,8 @@ describe('User Repository', () => {
     await UsersEntity.clear();
   });
 
-  afterAll(async () => {
-    await new Database().disconnectDatabase();
-  });
-
-  describe('Create Message', () => {
-    it('Should create a message', async () => {
+  describe('Create User', () => {
+    it('Should create a user', async () => {
       const sut = new UserRepository();
       const params = makeCreateUser();
 
