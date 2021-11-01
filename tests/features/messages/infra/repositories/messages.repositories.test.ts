@@ -1,12 +1,12 @@
-import MessagesRepository from '../../../../../src/features/messages/infra/repositories/messages.repository';
-import Database from '../../../../../src/core/infra/data/connections/database';
-import { MessagesEntity } from '../../../../../src/core/infra/data/database/entities';
-import { Messsage } from '../../../../../src/features/messages/domain/models';
+import MessagesRepository from "../../../../../src/features/messages/infra/repositories/messages.repository";
+import Database from "../../../../../src/core/infra/data/connections/database";
+import { MessagesEntity } from "../../../../../src/core/infra/data/database/entities";
+import { Messsage } from "../../../../../src/features/messages/domain/models";
 import {
   makeReturnId,
   makeCreateUser,
-} from '../../../user/infra/repositories/user.repository.test';
-import UserRepository from '../../../../../src/features/user/infra/repositories/user.repository';
+} from "../../../user/infra/repositories/user.repository.test";
+import UserRepository from "../../../../../src/features/user/infra/repositories/user.repository";
 
 const id = makeReturnId();
 const { name } = makeCreateUser();
@@ -14,13 +14,13 @@ const { name } = makeCreateUser();
 const makeCreateMessage = (): Messsage => {
   return {
     idUser: String(id),
-    description: 'Description Test',
-    details: 'Details Test',
+    description: "Description Test",
+    details: "Details Test",
     startDate: new Date(),
   };
 };
 
-describe('Messages Repository', () => {
+describe("Messages Repository", () => {
   beforeAll(async () => {
     await new Database().openConnection();
   });
@@ -29,8 +29,8 @@ describe('Messages Repository', () => {
     await MessagesEntity.clear();
   });
 
-  describe('Create Message', () => {
-    it('Should create a message', async () => {
+  describe("Create Message", () => {
+    it("Should create a message", async () => {
       const sut = new MessagesRepository();
       const params = makeCreateMessage();
 
@@ -43,8 +43,8 @@ describe('Messages Repository', () => {
     });
   });
 
-  describe('Get Messages', () => {
-    it('Should return all messages', async () => {
+  describe("Get Messages", () => {
+    it("Should return all messages", async () => {
       const sut = new MessagesRepository();
 
       const result = await sut.getMessages();
