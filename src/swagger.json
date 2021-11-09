@@ -1,0 +1,312 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Lista de Recados",
+    "description": "Essa API tem objetivo de concluir trabalho da Growdev",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/v1",
+      "description": "API Lista de Recados"
+    }
+  ],
+  "paths": {
+    "/messages/:id": {
+      "get": {
+        "summary": "Busca Mensagem",
+        "description": "Essa rota será responsável por buscar mensages",
+        "tag": ["Messages"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID do Usuário",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Message already exists"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "idUser": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de Mensagem",
+        "description": "Essa rota será responsável por cadastrar uma nova mensagem",
+        "tag": ["Messages"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID do Usuário",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Messages"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Message already exists"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza de Mensagem",
+        "description": "Essa rota será responsável por atualizar uma nova mensagem",
+        "tag": ["Messages"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID do Usuário",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Messages"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Message already exists"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Busca todos os Usuário",
+        "description": "Essa rota será responsável por buscar todos os usuário",
+        "tag": ["Users"],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Users not exists"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro do Usuário",
+        "description": "Essa rota será responsável por cadastrar um novo usuário",
+        "tag": ["Messages"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersAdd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "User already exists"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/UsersAdd"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/name/:name": {
+      "get": {
+        "summary": "Busca Usuário especifico",
+        "description": "Essa rota será responsável por um usuário",
+        "tag": ["Users"],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome do Usuário",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "User not exists"
+          },
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/:id": {
+      "put": {
+        "summary": "Atualiza o usuário",
+        "description": "Essa rota será responsável por atualizar um usuário",
+        "tag": ["Messages"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID do Usuário",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Messages"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Message already exists"
+          },
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Messages": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "Users": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "repeat_password": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
+        }
+      },
+      "UsersAdd": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "repeat_password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

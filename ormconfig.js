@@ -5,7 +5,7 @@ const rootPath =
 
 let config = {};
 
-if (process.env.NODE_ENV.toString() === 'test') {
+if (process.env.NODE_ENV && process.env.NODE_ENV.toString() === 'test') {
   config = {
     type: 'sqlite',
     database: './testdb.db',

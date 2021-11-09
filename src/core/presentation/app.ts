@@ -1,7 +1,8 @@
-import express, { Request, Response, Router } from "express";
-import MessagesRoutes from "../../features/messages/presentation/routes/routes";
-import UserRoutes from "../../features/user/presentation/routes/routes";
-
+import express, { Request, Response, Router } from 'express';
+import MessagesRoutes from '../../features/messages/presentation/routes/routes';
+import UserRoutes from '../../features/user/presentation/routes/routes';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDoc from '../../swagger.json';
 export default class App {
   readonly #express: express.Application;
 
@@ -21,15 +22,20 @@ export default class App {
   private middlewares(): void {
     this.#express.use(express.json());
     this.#express.use(express.urlencoded({ extended: false }));
+    this.#express.use(
+      '/api-docs',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDoc),
+    );
   }
 
   private routes(): void {
     const router = Router();
 
-    this.#express.get("/", (_: Request, res: Response) => res.redirect("/api"));
-    this.#express.use("/api", router);
+    this.#express.get('/', (_: Request, res: Response) => res.redirect('/api'));
+    this.#express.use('/api', router);
 
-    router.get("/", (_: Request, res: Response) => res.send("API RUNNING..."));
+    router.get('/', (_: Request, res: Response) => res.send('API RUNNING...'));
 
     const messagesRoutes = new MessagesRoutes().init();
     const userRoutes = new UserRoutes().init();
@@ -39,7 +45,7 @@ export default class App {
 
   public start(port: number): void {
     this.#express.listen(port, () =>
-      console.log(`Server is running on ${port}`)
+      console.log(`Server is running on ${port}`),
     );
   }
 }
